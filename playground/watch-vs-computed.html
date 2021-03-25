@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{ num }}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        num: 10
+      },
+      //num이라는 변수에 2배한 값을 계속 표기해줌.
+      // 대부분 가볍게 사용함. 그래서 텍스트 연산에서 주로 사용됨
+      computed: {
+        doubleNum: function() {
+          return this.num * 2;
+        }
+      },
+      // 대부분 무거운 로직에서 주로 사용됨 그래서 대부분 methods 의 함수에 값을 전달하여 실행함.
+      watch: {
+        //num의 값이 변경될 떄, 인자 2개를 받아온다
+        // 변경된값, 변경되기 전의 값
+        //ex) 예로 어떤 버튼을 클릭하면 num이 1씩 줄아든다고 해보자.
+        //newValue, oldValue
+        // 3 , 2
+        // 2, 1
+        // 1, 0
+        num: function(newValue, oldValue) {
+          this.fetchUserByNumber(newValue);
+        }
+        //computed 와 watch 의 차이
+        // computed - 참조하고 있는 값이 변경될 떄 마다 정의된 계산식에 따라 값을 출력한다.
+        // watch - 값이 변경될 떄 실행되는 함수를 우리가 지정할 수 있습니다. 즉, computed 가 계산된 값을 출력하는 용이라면,
+        // watch는 어떤 조건이 되었을 때 함수를 실행시키기 위한 트리거로서 사용할 수 있다는 의미입니다.
+      },
+      methods: {
+        fetchUserByNumber: function(num) {
+          // console.log(num);
+          axios.get(num);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

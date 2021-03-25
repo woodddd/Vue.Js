@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 라우터에서 페이지 이동을 하기 위한 링크태그 -->
+        <router-link to="/login">Login</router-link>
+        <!-- 화면에 뿌려질 때엔 <a href="/login"></a> 와 같이 출력 된다. -->
+        <router-link to="/main">Main</router-link>
+
+        <!-- *주의사항 vue 와 Vuerouter 를 사용해야지만 쓸 수 있는 태그. 만약 아래 vue 에서 router: router 를 주석처리하면 라우터가 연결되지 않았으므로 에러가 발생된다.         -->
+       <!-- Vuerouter 인스턴스에서 정의한path의 url 로 이동을 할 경우, <router-view></router-view> 태그는 path가 정의된 객체의 component 를 표현하게 된다. -->
+       <!-- 그리하여 페이지에 http://192.168.40.1:5500/playground/router.html#/main 와 같이 main 을 요청하게 되면 <router-view></router-view> 에는 MainComponent 의 template 이 들어가서 화면에 나오게 된다. -->
+        <router-view></router-view> <!-- 컴포넌트가 뿌려지는 영역 -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script>
+        var LoginComponent = {
+            template: '<div>login</div>'
+        }
+
+        var MainComponent = {
+            template: '<div>main</div>'
+        }
+
+        // 라우터 인스턴스 생성
+        var router = new VueRouter({ 
+            //라우터 옵션
+            //mode: 'history'; - 모드 옵션을 이용하면 주소에 html# 처럼 나오는 해시를 없앨 수 있다.
+            // routes - 페이지의 라우팅정보(어떤url로이동했을 때 어떤 페이지가 뿌려질 지)가 배열로 들어간다.
+            routes: [ //페이지의 정보들이 들어가는 옵션. (페이지의 개수만큼 객체가 필요하다.)
+                
+                //로그인 페이지 정보
+                {
+                    //path - 페이지의 url
+                    path: '/login',
+                    //component - 해당 url에서 표시될 컴포넌트
+                    //주의사항! Vue 에서 사용했던 components 가 아닌, 페이지 요청시마다 출력될 component 는 1개이므로 s 가 붙지 않는다.
+                    component: LoginComponent
+                },
+
+                //메인 페이지 정보
+                {
+                    path: '/main',
+                    component: MainComponent
+                }
+            ]
+        });
+
+        new Vue({
+            el: '#app',
+            router: router //인스턴스에 라우터 인스턴스를 등록. 라우터를 등록하면 f12 - Vue 에서 <Root> 태그를 확인해보면 $route 가 생성된 것을 볼 수 있다.
+        });
+    </script>
+</body>
+</html>

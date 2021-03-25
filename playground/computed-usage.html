@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .warning {
+    color: red;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 
+    warnig: 뒤의 isError 의 값이
+    true 일 경우 <p class="warning">Hello</p>
+    false 일 경우<p calss>Hello</p> 
+    
+    <p v-bind:class="{ warning: isError }">Hello</p>
+    -->
+    <p v-bind:class="errorTextColor">Hello</p>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        // cname: 'blue-text',
+        isError: false
+      },
+      //이와 같이 computed는 data의 변수 외에도 v-bind 의 변수도 이용할 수 있다.
+      computed: {
+        errorTextColor: function() {
+          return this.isError ? 'warning' : null;
+          //data: {} 가 아닌 곳에서 데이터의 변수를 사용하는 경우 반드시 this를 붙여줘야 한다.
+        }
+      }
+    });
+  </script>
+</body>
+</html>
